@@ -1,6 +1,7 @@
 # bits-eventos
 Bis eventos PI
 
+# Rota api de cadastro de pessoa
 <h2>Metodos para usar</h2>
 <br>
 <h3>Get</h3>
