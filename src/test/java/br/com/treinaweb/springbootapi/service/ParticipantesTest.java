@@ -1,6 +1,6 @@
-package br.com.treinaweb.springbootapi.implement;
+package br.com.treinaweb.springbootapi.service;
 
-public import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ public class ParticipantesTest {
     private Participantes mockedParticipantes;
 
     @InjectMocks
-    private ParticipantesService participantesService;
+    private ParticipantesTest participantesService;
 
     @Test
     void testEquals() {
@@ -43,7 +43,7 @@ public class ParticipantesTest {
         // Testing
         assertEquals("admin", mockedParticipantes.getAdministrador());
     }
+
 }
- {
   
-}
+
