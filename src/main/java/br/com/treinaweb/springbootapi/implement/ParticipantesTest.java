@@ -28,7 +28,7 @@ public class ParticipantesTest {
         participante1.setAdministrador("admin");
 
         Participantes participante2 = new Participantes();
-        participante2.setEvento_id("evento123");
+        participante2.setEvento_id("eventoaa123");
         participante2.setParticipante_id("participante123");
         participante2.setAdministrador("admin");
 
