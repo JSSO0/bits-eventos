@@ -17,7 +17,7 @@ public class EventoDAO {
     private final EventoDefinicoes eventoMapper;
 
 
-    // Construtor que recebe uma conexão com o banco de dados
+
     public EventoDAO(Connection connection) throws SQLException {
         this.connection = connection;
         this.eventoMapper = new EventoDefinicoes();
