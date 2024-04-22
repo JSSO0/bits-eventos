@@ -29,4 +29,28 @@ Bis eventos PI
 
 </h3>
 
+Tabela de Eventos:
+evento_id (UUID) - Identificador único do evento (Chave primária)
+nome_evento (Texto) - Nome do evento
+data_evento (Data/Hora) - Data e hora do evento
+evento_pago (Booleano) - Indica se o evento é pago ou gratuito
+evento_valor (Numérico) - Valor do evento
+adm_id (UUID) - Referência para o ID do administrador (Chave estrangeira)
+
+Tabela de Participantes:
+participante_id (UUID) - Identificador único do participante (Chave primária)
+evento_id (UUID) - Referência para o ID do evento (Chave estrangeira)
+pessoa_id (UUID) - Referência para o ID da pessoa (Chave estrangeira)
+administrador (Booleano) - Indica se o participante é um administrador do evento
+
+Tabela de Pessoas (Usuários):
+pessoa_id (UUID) - Identificador único da pessoa (Chave primária)
+nome (Texto) - Nome da pessoa
+telefone (Texto) - Número de telefone da pessoa
+email (Texto) - Endereço de e-mail da pessoa
+cpf (Texto) - CPF da pessoa
+username (Texto) - Nome de usuário da pessoa
+password (Texto) - Senha da pessoa
+administrador (Booleano) - Indica se a pessoa é um administrador global do sistema
+
 <h3>http://localhost:8080/ </h3>

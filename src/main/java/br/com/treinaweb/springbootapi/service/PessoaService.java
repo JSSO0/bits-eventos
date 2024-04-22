@@ -4,14 +4,15 @@ import java.util.List;
 
 import br.com.treinaweb.springbootapi.atribuicoes.PessoasDefinicoes;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import br.com.treinaweb.springbootapi.entity.Pessoa;
 import br.com.treinaweb.springbootapi.implement.PessoaDAO;
 
 import java.sql.SQLException;
-
-@Service
+@Component
 public class PessoaService {
     final PessoaDAO pessoaDAO;
 

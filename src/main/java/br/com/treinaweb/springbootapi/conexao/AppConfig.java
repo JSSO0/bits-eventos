@@ -17,9 +17,9 @@ public class AppConfig {
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/db_api");
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/api_bitseventos_new");
         dataSource.setUsername("postgres");
+        dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setPassword("1234");
         return dataSource;
     }
