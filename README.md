@@ -54,3 +54,85 @@ password (Texto) - Senha da pessoa
 administrador (Booleano) - Indica se a pessoa é um administrador global do sistema
 
 <h3>http://localhost:8080/ </h3>
+
+CREATE TABLE Company (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255),
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Event (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255),
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    starts_in TIMESTAMP,
+    end_in TIMESTAMP,
+    payed_event BOOLEAN,
+    value_event DECIMAL CHECK (payed_event = false OR (payed_event = true AND value_event IS NOT NULL)),
+    company_id UUID REFERENCES Company(id)
+);
+
+CREATE TABLE User (
+    id UUID PRIMARY KEY,
+    name VARCHAR(255),
+    company_id UUID REFERENCES Company(id),
+    phone VARCHAR(15),
+    email VARCHAR(255),
+    is_adm BOOLEAN,
+    password VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Participants (
+    id UUID PRIMARY KEY,
+    event_id UUID REFERENCES Event(id),
+    user_id UUID REFERENCES User(id),
+    adm_of_event BOOLEAN
+);
+
+
+import java.util.UUID;
+import java.time.LocalDateTime;
+
+public class Company {
+    private UUID id;
+    private String name;
+    private String description;
+    private LocalDateTime createdAt;
+    // getters and setters
+}
+
+public class Event {
+    private UUID id;
+    private String name;
+    private String description;
+    private LocalDateTime createdAt;
+    private LocalDateTime startsIn;
+    private LocalDateTime endIn;
+    private boolean payedEvent;
+    private double valueEvent;
+    private UUID companyId;
+    // getters and setters
+}
+
+public class User {
+    private UUID id;
+    private String name;
+    private UUID companyId;
+    private String phone;
+    private String email;
+    private boolean isAdm;
+    private String password;
+    private LocalDateTime createdAt;
+    // getters and setters
+}
+
+public class Participants {
+    private UUID id;
+    private UUID eventId;
+    private UUID userId;
+    private boolean admOfEvent;
+    // getters and setters
+}
