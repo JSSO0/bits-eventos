@@ -15,20 +15,16 @@ public class PessoasDefinicoes {
         pessoa.setCompany_id(resultSet.getString("company_id"));
         pessoa.setPhone(resultSet.getString("phone"));
         pessoa.setEmail(resultSet.getString("email"));
-        pessoa.setCpf(resultSet.getString("cpf"));
-        pessoa.setUsername(resultSet.getString("username"));
+        pessoa.setAdm(resultSet.getBoolean("is_adm"));
         pessoa.setPassword(resultSet.getString("password"));
-        pessoa.setAdm(resultSet.getBoolean("isAdm"));
         return pessoa;
     }
 
     public void copiarAtributos(@NotNull Pessoa destino, @NotNull Pessoa origem) {
-        destino.setUsername(origem.getUsername());
         destino.setPassword(origem.getPassword());
         destino.setName(origem.getName());
         destino.setPhone(origem.getPhone());
         destino.setEmail(origem.getEmail());
-        destino.setCpf(origem.getCpf());
         destino.setCompany_id(origem.getCompany_id());
         destino.setAdm(origem.getAdm());
     }

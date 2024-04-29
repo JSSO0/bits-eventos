@@ -11,8 +11,6 @@ public class Pessoa {
     private String company_id;
     private String phone;
     private String email;
-    private String cpf;
-    private String username;
     private String password;
     private Boolean isAdm;
 
@@ -28,14 +26,6 @@ public class Pessoa {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -70,14 +60,6 @@ public class Pessoa {
         this.email = email;
     }
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
 
     public String getCompany_id() {
         return company_id;
@@ -99,11 +81,11 @@ public class Pessoa {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Pessoa pessoa)) return false;
-        return Objects.equals(getId(), pessoa.getId()) && Objects.equals(getName(), pessoa.getName()) && Objects.equals(getCompany_id(), pessoa.getCompany_id()) && Objects.equals(getPhone(), pessoa.getPhone()) && Objects.equals(getEmail(), pessoa.getEmail()) && Objects.equals(getCpf(), pessoa.getCpf()) && Objects.equals(getUsername(), pessoa.getUsername()) && Objects.equals(getPassword(), pessoa.getPassword()) && Objects.equals(isAdm, pessoa.isAdm);
+        return Objects.equals(getId(), pessoa.getId()) && Objects.equals(getName(), pessoa.getName()) && Objects.equals(getCompany_id(), pessoa.getCompany_id()) && Objects.equals(getPhone(), pessoa.getPhone()) && Objects.equals(getEmail(), pessoa.getEmail()) && Objects.equals(getPassword(), pessoa.getPassword()) && Objects.equals(isAdm, pessoa.isAdm);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getCompany_id(), getPhone(), getEmail(), getCpf(), getUsername(), getPassword(), isAdm);
+        return Objects.hash(getId(), getName(), getCompany_id(), getPhone(), getEmail(), getPassword(), isAdm);
     }
 }

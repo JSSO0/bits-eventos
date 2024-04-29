@@ -22,7 +22,7 @@ public class CompanyDAO {
     }
 
     public void criarEmpresa(Company empresa) throws SQLException {
-        String sql = "INSERT INTO Company (id, name, description, created_at) VALUES (?, ?, ?, CURRENT_TIMESTAMP);";
+        String sql = "INSERT INTO Company (name, description) VALUES (?, ?);";
         SqlUtil.executeInsert(sql, connection, empresa);
     }
 

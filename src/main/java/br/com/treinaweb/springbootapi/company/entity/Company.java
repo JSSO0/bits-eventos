@@ -1,20 +1,13 @@
 package br.com.treinaweb.springbootapi.company.entity;
 
+import java.sql.Time;
 import java.util.Objects;
 
 public class Company {
-    private String id;
     private String name;
     private String description;
-    private String created_at;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
+ 
 
     public String getName() {
         return name;
@@ -32,23 +25,17 @@ public class Company {
         this.description = description;
     }
 
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
-    }
+  
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Company company)) return false;
-        return Objects.equals(getId(), company.getId()) && Objects.equals(getName(), company.getName()) && Objects.equals(getDescription(), company.getDescription()) && Objects.equals(getCreated_at(), company.getCreated_at());
+        return  Objects.equals(getName(), company.getName()) && Objects.equals(getDescription(), company.getDescription());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getDescription(), getCreated_at());
+        return Objects.hash(getName(), getDescription());
     }
 }

@@ -35,8 +35,6 @@ class PessoaServiceTest {
         pessoaParaTeste.setName("João");
         pessoaParaTeste.setPhone("123456789");
         pessoaParaTeste.setEmail("joao@example.com");
-        pessoaParaTeste.setCpf("12345678901");
-        pessoaParaTeste.setUsername("joao123");
         pessoaParaTeste.setPassword("senha123");
 
 
