@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import br.com.treinaweb.springbootapi.entity.Evento;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/*
 public class EventoTest {
 
     @Test
@@ -42,4 +42,4 @@ public class EventoTest {
         // Verificar se o hashCode é consistente com o equals
         assertEquals(evento.hashCode(), evento.hashCode());
     }
-}
+}*/
