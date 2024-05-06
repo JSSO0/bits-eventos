@@ -16,9 +16,11 @@ import java.sql.SQLException;
 public class AppConfig {
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource() /*throws InterruptedException*/ {
+        //Thread.sleep(10000);
+
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/api_bits_events_new");
+        dataSource.setUrl("jdbc:postgresql://5432:5432/api_bits_events_new");
         dataSource.setUsername("postgres");
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setPassword("1234");

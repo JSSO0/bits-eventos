@@ -1,11 +1,11 @@
 package br.com.treinaweb.springbootapi.service;
-
+/*
 import org.junit.jupiter.api.Test;
 
 import br.com.treinaweb.springbootapi.entity.Evento;
 
 import static org.junit.jupiter.api.Assertions.*;
-/*
+
 public class EventoTest {
 
     @Test
