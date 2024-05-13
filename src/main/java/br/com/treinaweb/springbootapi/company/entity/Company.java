@@ -4,6 +4,7 @@ import java.sql.Time;
 import java.util.Objects;
 
 public class Company {
+    private String id;
     private String name;
     private String description;
 
@@ -25,17 +26,12 @@ public class Company {
         this.description = description;
     }
 
-  
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Company company)) return false;
-        return  Objects.equals(getName(), company.getName()) && Objects.equals(getDescription(), company.getDescription());
+    public String getId() {
+        return id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getName(), getDescription());
+    public void setId(String id) {
+        this.id = id;
     }
+
 }

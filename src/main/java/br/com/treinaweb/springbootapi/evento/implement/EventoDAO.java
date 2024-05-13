@@ -38,7 +38,7 @@ public class EventoDAO {
     }
 
     public void criarEvento(Evento evento) throws SQLException {
-        String sql = "INSERT INTO Evento (id, name, description, created_at, starts_in, end_in, payed_event, value_event, company_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO Evento ( name, description, created_at, starts_in, end_in, payed_event, value_event, company_id) VALUES ( ?, ?, ?, ?, ?, ?, ?);";
         SqlUtil.executeInsert(sql, connection, evento);
     }
 

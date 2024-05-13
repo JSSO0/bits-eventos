@@ -37,7 +37,7 @@ public class ParticipantsDAO {
     }
 
     public void criarParticipante(Participantes participante) throws SQLException {
-        String sql = "INSERT INTO Participants (id, event_id, user_id, adm_of_event) VALUES (?, ?, ?, ?);";
+        String sql = "INSERT INTO Participants ( event_id, user_id, adm_of_event) VALUES ( ?, ?, ?);";
         SqlUtil.executeInsert(sql, connection, participante);
     }
 

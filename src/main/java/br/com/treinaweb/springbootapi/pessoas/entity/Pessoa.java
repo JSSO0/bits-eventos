@@ -13,14 +13,8 @@ public class Pessoa {
     private String email;
     private Boolean isAdm;
     private String password;
+    private String created_at;
 
-
-
-    public Pessoa() {
-        this.id = UUID.randomUUID().toString();
-    }
-
-    // Getter e Setter para o novo ID
     public String getId() {
         return id;
     }
@@ -29,20 +23,20 @@ public class Pessoa {
         this.id = id;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCompany_id() {
+        return company_id;
+    }
+
+    public void setCompany_id(String company_id) {
+        this.company_id = company_id;
     }
 
     public String getPhone() {
@@ -61,15 +55,6 @@ public class Pessoa {
         this.email = email;
     }
 
-
-    public String getCompany_id() {
-        return company_id;
-    }
-
-    public void setCompany_id(String company_id) {
-        this.company_id = company_id;
-    }
-
     public Boolean getAdm() {
         return isAdm;
     }
@@ -78,15 +63,19 @@ public class Pessoa {
         isAdm = adm;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Pessoa pessoa)) return false;
-        return Objects.equals(getName(), pessoa.getName()) && Objects.equals(getCompany_id(), pessoa.getCompany_id()) && Objects.equals(getPhone(), pessoa.getPhone()) && Objects.equals(getEmail(), pessoa.getEmail()) && Objects.equals(getPassword(), pessoa.getPassword()) && Objects.equals(isAdm, pessoa.isAdm);
+    public String getPassword() {
+        return password;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getName(), getCompany_id(), getPhone(), getEmail(), getPassword(), isAdm);
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
     }
 }
