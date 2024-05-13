@@ -2,10 +2,13 @@ version: '3.7'
 
 services:
   db:
-    image: postgres
+    image: postgres:latest
+    restart: always
     environment:
-      POSTGRES_DB: api_bits_events_new
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: backup_db_bits_events
     ports:
       - "5432:5432"
+    volumes:
+      - ./backup_db_bits_events:/docker-entrypoint-initdb.d/backup_db_bits_events

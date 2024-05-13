@@ -10,14 +10,14 @@ public class ParticipantsDefinicoes {
         Participantes participantes = new Participantes();
         participantes.setId(resultSet.getString("id"));
         participantes.setEvent_id(resultSet.getString("event_id"));
-        participantes.setParticipants(resultSet.getString("participants"));
+        participantes.setUser_id(resultSet.getString("user_id"));
         participantes.setAdm_of_event(resultSet.getString("adm_of_event"));
         return participantes;
     }
 
     public void copiarAtributos(Participantes destino, Participantes origem) {
         destino.setEvent_id(origem.getEvent_id());
-        destino.setParticipants(origem.getParticipants());
+        destino.setUser_id(origem.getUser_id());
         destino.setAdm_of_event(origem.getAdm_of_event());
     }
 }

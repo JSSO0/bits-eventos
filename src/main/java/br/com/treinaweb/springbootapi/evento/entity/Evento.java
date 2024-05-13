@@ -9,7 +9,6 @@ public class Evento {
     private String created_at;
     private String starts_in;
     private String end_in;
-    private String participants;
     private Boolean payed_event;
     private String value_event;
     private String company_id;
@@ -62,14 +61,6 @@ public class Evento {
         this.end_in = end_in;
     }
 
-    public String getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(String participants) {
-        this.participants = participants;
-    }
-
     public Boolean getPayed_event() {
         return payed_event;
     }
@@ -98,11 +89,11 @@ public class Evento {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Evento evento)) return false;
-        return Objects.equals(getId(), evento.getId()) && Objects.equals(getName(), evento.getName()) && Objects.equals(getDescription(), evento.getDescription()) && Objects.equals(getCreated_at(), evento.getCreated_at()) && Objects.equals(getStarts_in(), evento.getStarts_in()) && Objects.equals(getEnd_in(), evento.getEnd_in()) && Objects.equals(getParticipants(), evento.getParticipants()) && Objects.equals(getPayed_event(), evento.getPayed_event()) && Objects.equals(getValue_event(), evento.getValue_event()) && Objects.equals(getCompany_id(), evento.getCompany_id());
+        return Objects.equals(getId(), evento.getId()) && Objects.equals(getName(), evento.getName()) && Objects.equals(getDescription(), evento.getDescription()) && Objects.equals(getCreated_at(), evento.getCreated_at()) && Objects.equals(getStarts_in(), evento.getStarts_in()) && Objects.equals(getEnd_in(), evento.getEnd_in())&& Objects.equals(getPayed_event(), evento.getPayed_event()) && Objects.equals(getValue_event(), evento.getValue_event()) && Objects.equals(getCompany_id(), evento.getCompany_id());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getDescription(), getCreated_at(), getStarts_in(), getEnd_in(), getParticipants(), getPayed_event(), getValue_event(), getCompany_id());
+        return Objects.hash(getId(), getName(), getDescription(), getCreated_at(), getStarts_in(), getEnd_in(), getPayed_event(), getValue_event(), getCompany_id());
     }
 }

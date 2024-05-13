@@ -5,7 +5,7 @@ import java.util.Objects;
 public class Participantes {
 private String id;
 private String event_id;
-private String participants;
+private String user_id;
 private String adm_of_event;
 
     public String getId() {
@@ -24,12 +24,12 @@ private String adm_of_event;
         this.event_id = event_id;
     }
 
-    public String getParticipants() {
-        return participants;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setParticipants(String participants) {
-        this.participants = participants;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getAdm_of_event() {
@@ -44,11 +44,11 @@ private String adm_of_event;
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Participantes that)) return false;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getEvent_id(), that.getEvent_id()) && Objects.equals(getParticipants(), that.getParticipants()) && Objects.equals(getAdm_of_event(), that.getAdm_of_event());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getEvent_id(), that.getEvent_id()) && Objects.equals(getUser_id(), that.getUser_id()) && Objects.equals(getAdm_of_event(), that.getAdm_of_event());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getEvent_id(), getParticipants(), getAdm_of_event());
+        return Objects.hash(getId(), getEvent_id(), getUser_id(), getAdm_of_event());
     }
 }

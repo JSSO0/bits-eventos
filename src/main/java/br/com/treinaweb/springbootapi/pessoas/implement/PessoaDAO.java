@@ -38,7 +38,7 @@ public class PessoaDAO {
     }
 
     public void criarUsuarioNormal(Pessoa pessoa) throws SQLException {
-        String sql = "INSERT INTO Usuario ( name,  phone, email, is_adm, password) VALUES ( ?, ?, ?, false, ?);";
+        String sql = "INSERT INTO Usuario ( name,  phone, email, is_adm, password) VALUES ( ?, ?, ?, ?, ?);";
         SqlUtil.executeInsert(sql, connection, pessoa);
     }
 

@@ -11,8 +11,9 @@ public class Pessoa {
     private String company_id;
     private String phone;
     private String email;
-    private String password;
     private Boolean isAdm;
+    private String password;
+
 
 
     public Pessoa() {
@@ -81,7 +82,7 @@ public class Pessoa {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Pessoa pessoa)) return false;
-        return Objects.equals(getId(), pessoa.getId()) && Objects.equals(getName(), pessoa.getName()) && Objects.equals(getCompany_id(), pessoa.getCompany_id()) && Objects.equals(getPhone(), pessoa.getPhone()) && Objects.equals(getEmail(), pessoa.getEmail()) && Objects.equals(getPassword(), pessoa.getPassword()) && Objects.equals(isAdm, pessoa.isAdm);
+        return Objects.equals(getName(), pessoa.getName()) && Objects.equals(getCompany_id(), pessoa.getCompany_id()) && Objects.equals(getPhone(), pessoa.getPhone()) && Objects.equals(getEmail(), pessoa.getEmail()) && Objects.equals(getPassword(), pessoa.getPassword()) && Objects.equals(isAdm, pessoa.isAdm);
     }
 
     @Override

@@ -16,7 +16,6 @@ public class EventoDefinicoes {
         evento.setCreated_at(resultSet.getString("created_at"));
         evento.setStarts_in(resultSet.getString("starts_in"));
         evento.setEnd_in(resultSet.getString("end_in"));
-        evento.setParticipants(resultSet.getString("participants"));
         evento.setPayed_event(resultSet.getBoolean("payed_event"));
         evento.setValue_event(resultSet.getString("value_Event"));
         evento.setCompany_id(resultSet.getString("company_id"));
@@ -28,7 +27,6 @@ public class EventoDefinicoes {
         destino.setDescription(origem.getDescription());
         destino.setCreated_at(origem.getCreated_at());
         destino.setEnd_in(origem.getEnd_in());
-        destino.setParticipants(origem.getParticipants());
         destino.setPayed_event(origem.getPayed_event());
         destino.setValue_event(origem.getValue_event());
         destino.setCompany_id(origem.getCompany_id());

@@ -38,13 +38,13 @@ public class EventoDAO {
     }
 
     public void criarEvento(Evento evento) throws SQLException {
-        String sql = "INSERT INTO Event (id, name, description, created_at, starts_in, end_in, payed_event, value_event, company_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        String sql = "INSERT INTO Evento (id, name, description, created_at, starts_in, end_in, payed_event, value_event, company_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
         SqlUtil.executeInsert(sql, connection, evento);
     }
 
 
     public Evento consultarEvento(String id) throws SQLException {
-        String sql = "SELECT * FROM Event WHERE id = ?;";
+        String sql = "SELECT * FROM Evento WHERE id = ?;";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setObject(1, id);
@@ -59,14 +59,14 @@ public class EventoDAO {
     }
 
     public void atualizarEvento(Evento evento) throws SQLException {
-        String sql = "UPDATE Event SET name = ?, description = ?, starts_in = ?, end_in = ?, " +
+        String sql = "UPDATE Evento SET name = ?, description = ?, starts_in = ?, end_in = ?, " +
                 "payed_event = ?, value_event = ?, company_id = ? WHERE id = ?;";
         SqlUtil.executeInsert(sql, connection, evento);
     }
 
     // Deleção de um evento pelo ID
     public void deletarEvento(String id) throws SQLException {
-        String sql = "DELETE FROM Event WHERE id = ?;";
+        String sql = "DELETE FROM Evento WHERE id = ?;";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setObject(1, id);
             stmt.executeUpdate();

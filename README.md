@@ -136,3 +136,69 @@ public class Participants {
     private boolean admOfEvent;
     // getters and setters
 }
+
+
+# Get:
+http://localhost:8080/api/pessoas
+[
+{
+"id": "dca67caa-e392-46a6-b213-7dfe4a8f2731",
+"name": "joely",
+"company_id": null,
+"phone": "88981522648",
+"email": "sjoely131@gmail.com",
+"password": "1234",
+"adm": false
+},
+{
+"id": "122471b2-151f-4696-a122-6d8dcecabf7f",
+"name": "joely",
+"company_id": null,
+"phone": "88981522648",
+"email": "sjoely131@gmail.com",
+"password": "1234",
+"adm": false
+},
+{
+"id": "f28cbf7e-f026-4e93-99b2-bcc429ba2a48",
+"name": "joely",
+"company_id": null,
+"phone": "okadasd",
+"email": "asdasdad",
+"password": "asdasdasd",
+"adm": false
+}
+]
+
+http://localhost:8080/api/company
+[
+{
+"name": "joely",
+"description": "teste"
+}
+]
+
+http://localhost:8080/api/eventos
+[
+{
+"id": "4a521c19-3493-448e-9ed6-3afb0ed096df",
+"name": "joely",
+"description": "teste",
+"created_at": "2024-05-07 23:40:18",
+"starts_in": "2024-05-08 00:00:00",
+"end_in": "2024-05-08 01:00:00",
+"payed_event": true,
+"value_event": "50.0",
+"company_id": "3a521c19-3493-448e-9ed6-3afb0ed096df"
+}
+]
+
+http://localhost:8080/api/participantes
+[
+{
+"id": "123e4567-e89b-12d3-a456-426614174000",
+"event_id": "4a521c19-3493-448e-9ed6-3afb0ed096df",
+"user_id": "dca67caa-e392-46a6-b213-7dfe4a8f2731",
+"adm_of_event": "t"
+}
+]
