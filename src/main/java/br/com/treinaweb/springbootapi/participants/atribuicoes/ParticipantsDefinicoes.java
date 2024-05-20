@@ -11,7 +11,7 @@ public class ParticipantsDefinicoes {
         participantes.setId(resultSet.getString("id"));
         participantes.setEvent_id(resultSet.getString("event_id"));
         participantes.setUser_id(resultSet.getString("user_id"));
-        participantes.setAdm_of_event(resultSet.getBoolean("adm_of_event"));
+        participantes.setAdm_of_event(resultSet.getString("adm_of_event"));
         return participantes;
     }
 

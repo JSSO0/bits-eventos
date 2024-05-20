@@ -6,7 +6,7 @@ public class Participantes {
 private String id;
 private String event_id;
 private String user_id;
-private Boolean adm_of_event;
+private String adm_of_event;
 
     public String getId() {
         return id;
@@ -32,11 +32,11 @@ private Boolean adm_of_event;
         this.user_id = user_id;
     }
 
-    public Boolean getAdm_of_event() {
+    public String getAdm_of_event() {
         return adm_of_event;
     }
 
-    public void setAdm_of_event(Boolean adm_of_event) {
+    public void setAdm_of_event(String adm_of_event) {
         this.adm_of_event = adm_of_event;
     }
 
