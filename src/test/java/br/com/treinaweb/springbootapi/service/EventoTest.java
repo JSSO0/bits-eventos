@@ -1,5 +1,5 @@
 package br.com.treinaweb.springbootapi.service;
-/*
+
 import org.junit.jupiter.api.Test;
 
 import br.com.treinaweb.springbootapi.entity.Evento;
@@ -10,7 +10,7 @@ public class EventoTest {
 
     @Test
     public void testEquals() {
-        // Criar dois objetos Evento com os mesmos atributos
+        
         Evento evento1 = new Evento();
         evento1.setData_evento("2024-04-22");
         evento1.setName_evento("Evento de Teste");
@@ -29,8 +29,9 @@ public class EventoTest {
         assertEquals(evento1, evento2);
     }
 
+    @Override
     @Test
-    public void testHashCode() {
+    void testHashCode() {
         // Criar um objeto Evento
         Evento evento = new Evento();
         evento.setData_evento("2024-04-22");
@@ -42,4 +43,4 @@ public class EventoTest {
         // Verificar se o hashCode é consistente com o equals
         assertEquals(evento.hashCode(), evento.hashCode());
     }
-}*/
+}
