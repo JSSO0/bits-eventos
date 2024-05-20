@@ -47,7 +47,7 @@ public class EventoTest {
 
     @Test
     public void testHashCode() {
-        // Criar um objeto Evento
+     
         Evento evento = new Evento();
         evento.setData_evento("2024-04-22");
         evento.setName_evento("Rafael");
