@@ -11,7 +11,6 @@ import br.com.treinaweb.springbootapi.pessoas.atribuicoes.PessoasDefinicoes;
 import br.com.treinaweb.springbootapi.general.sqlUtil.SqlUtil;
 import br.com.treinaweb.springbootapi.pessoas.entity.Pessoa;
 
-
 public class PessoaDAO {
     private final Connection connection;
     private final PessoasDefinicoes pessoaMapper;
@@ -37,45 +36,50 @@ public class PessoaDAO {
         return pessoas;
     }
 
- /*   public void criarUsuarioNormal(Pessoa pessoa) throws SQLException {
-        String sql = "INSERT INTO Usuario ( name,  phone, email, is_adm, password) VALUES ( ?, ?, ?, ?, ?);";
-
-        // Montar a string da query preenchida
-        String queryPreenchida = sql.replaceFirst("\\?", "'" + pessoa.getName() + "'")
-                .replaceFirst("\\?", "'" + pessoa.getPhone() + "'")
-                .replaceFirst("\\?", "'" + pessoa.getEmail() + "'")
-                .replaceFirst("\\?", pessoa.getAdm() ? "t" : "f")
-                .replaceFirst("\\?", "'" + pessoa.getPassword() + "'");
-
-        System.out.println("Query SQL preenchida: " + queryPreenchida);
-        SqlUtil.executeInsert(sql, connection, pessoa);
-    }*/
- public void criarUsuarioNormal(Pessoa pessoa) {
-     String sql = "INSERT INTO Usuario (name, phone, email, is_adm, password) VALUES (?, ?, ?, ?, ?);";
-
-     try {
-         // Montar a string da query preenchida
-         String queryPreenchida = sql.replaceFirst("\\?", "'" + pessoa.getName() + "'")
-                 .replaceFirst("\\?", "'" + pessoa.getPhone() + "'")
-                 .replaceFirst("\\?", "'" + pessoa.getEmail() + "'")
-                 .replaceFirst("\\?", pessoa.getAdm() ? "true" : "false")
-                 .replaceFirst("\\?", "'" + pessoa.getPassword() + "'");
-
-         System.out.println("Query SQL preenchida: " + queryPreenchida);
-
-         SqlUtil.executeInsert(sql, connection, pessoa);
-     } catch (SQLException e) {
-         // Em caso de erro ao executar a inserção, imprimir uma mensagem de erro e o stack trace
-         System.err.println("Erro ao executar a inserção no banco de dados:");
-         e.printStackTrace();
-     }
- }
+    /*
+     * public void criarUsuarioNormal(Pessoa pessoa) throws SQLException {
+     * String sql =
+     * "INSERT INTO Usuario ( name,  phone, email, is_adm, password) VALUES ( ?, ?, ?, ?, ?);"
+     * ;
+     * 
+     * // Montar a string da query preenchida
+     * String queryPreenchida = sql.replaceFirst("\\?", "'" + pessoa.getName() +
+     * "'")
+     * .replaceFirst("\\?", "'" + pessoa.getPhone() + "'")
+     * .replaceFirst("\\?", "'" + pessoa.getEmail() + "'")
+     * .replaceFirst("\\?", pessoa.getAdm() ? "t" : "f")
+     * .replaceFirst("\\?", "'" + pessoa.getPassword() + "'");
+     * 
+     * System.out.println("Query SQL preenchida: " + queryPreenchida);
+     * SqlUtil.executeInsert(sql, connection, pessoa);
+     * }
+     */
+    public void criarUsuarioNormal(Pessoa pessoa) {
+        String sql = "INSERT INTO Usuario (name, phone, email, is_adm, password) VALUES (?, ?, ?, ?, ?);";
+    
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            // Definir os valores dos parâmetros
+            stmt.setString(1, pessoa.getName());
+            stmt.setString(2, pessoa.getPhone());
+            stmt.setString(3, pessoa.getEmail());
+            stmt.setBoolean(4, pessoa.getAdm());
+            stmt.setString(5, pessoa.getPassword());
+    
+            // Executar a inserção
+            int rowsAffected = stmt.executeUpdate();
+    
+            System.out.println("Linhas afetadas pela inserção: " + rowsAffected);
+        } catch (SQLException e) {
+            // Em caso de erro ao executar a inserção, imprimir uma mensagem de erro e o stack trace
+            System.err.println("Erro ao executar a inserção no banco de dados:");
+            e.printStackTrace();
+        }
+    }
 
     public void criarUsuarioCompany(Pessoa pessoa) throws SQLException {
         String sql = "INSERT INTO Usuario ( name,  phone, email, is_adm, password, company_name) VALUES ( ?, ?, ?, false, ?,?);";
         SqlUtil.executeInsert(sql, connection, pessoa);
     }
-
 
     public Pessoa consultarPessoaPorId(String id) throws SQLException {
         String sql = "SELECT * FROM Usuario WHERE id = ?";

@@ -37,8 +37,23 @@ public class ParticipantsDAO {
     }
 
     public void criarParticipante(Participantes participante) throws SQLException {
-        String sql = "INSERT INTO Participants ( event_id, user_id, adm_of_event) VALUES ( ?, ?, ?);";
-        SqlUtil.executeInsert(sql, connection, participante);
+        String sql = "INSERT INTO Participants (event_id, user_id, adm_of_event) VALUES (?, ?, ?);";
+    
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            // Definir os valores dos parâmetros
+            stmt.setString(1, participante.getId());
+            stmt.setString(2, participante.getUser_id());
+            stmt.setBoolean(3, participante.getAdm_of_event());
+    
+            // Executar a inserção
+            int rowsAffected = stmt.executeUpdate();
+    
+            System.out.println("Linhas afetadas pela inserção: " + rowsAffected);
+        } catch (SQLException e) {
+            // Em caso de erro ao executar a inserção, imprimir uma mensagem de erro e o stack trace
+            System.err.println("Erro ao executar a inserção no banco de dados:");
+            e.printStackTrace();
+        }
     }
 
 
