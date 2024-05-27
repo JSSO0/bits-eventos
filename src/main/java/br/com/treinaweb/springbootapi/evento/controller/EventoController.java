@@ -1,7 +1,5 @@
 package br.com.treinaweb.springbootapi.evento.controller;
 
-import br.com.treinaweb.springbootapi.company.entity.Company;
-import br.com.treinaweb.springbootapi.company.service.CompanyService;
 import br.com.treinaweb.springbootapi.evento.entity.Evento;
 import br.com.treinaweb.springbootapi.evento.service.EventoService;
 import br.com.treinaweb.springbootapi.general.exceptionhandler.ExcecoesPersonalizadas;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -43,6 +42,20 @@ public class EventoController {
         }
     }
 
+    @GetMapping("/participantes/{name}")
+    public ResponseEntity<Integer> numeroDeParticipantes(@PathVariable String name) throws SQLException {
+        int evento = eventoService.consultarQuantidadeUsuariosPorNome(name);
+
+            return ResponseEntity.ok(evento);
+
+    }
+    @GetMapping("/participantes")
+    public ResponseEntity<List<Integer>> numeroDeParticipantesGeral() throws SQLException {
+        int evento = eventoService.consultarQuantidadeUsuarios();
+
+        return ResponseEntity.ok(Collections.singletonList(evento));
+
+    }
     @PostMapping
     public ResponseEntity<Evento> criarEvento(@RequestBody Evento evento) throws ExcecoesPersonalizadas.CriarPessoaExcessao, SQLException {
         evento = eventoService.criarEvento(evento);

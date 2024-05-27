@@ -6,7 +6,6 @@ import br.com.treinaweb.springbootapi.evento.implement.EventoDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -27,6 +26,13 @@ public class EventoService {
         return eventoDAO.consultarEvento(id);
     }
 
+    public int consultarQuantidadeUsuariosPorNome(String name) throws SQLException{
+        return  eventoDAO.consultarQuantidadeUsuariosPorNome(name);
+    }
+
+    public int consultarQuantidadeUsuarios() throws SQLException{
+        return  eventoDAO.consultarQuantidadeUsuario();
+    }
     public Evento criarEvento(Evento evento) throws SQLException{
         eventoDAO.criarEvento(evento);
         return evento;

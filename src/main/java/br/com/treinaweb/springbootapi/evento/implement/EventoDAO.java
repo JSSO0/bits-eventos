@@ -78,7 +78,46 @@ public class EventoDAO {
         }
         return null;
     }
+    public int consultarQuantidadeUsuariosPorNome(String nome) throws SQLException {
+        String sql = "SELECT COUNT(p.id) AS total_users " +
+                "FROM public.evento e " +
+                "JOIN public.participants p ON e.id = p.event_id " +
+                "WHERE e.name = ? " +
+                "GROUP BY e.id, e.name;";
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, nome);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("total_users");
+                }
+            }
+        }
+        return 0;  // Se não houver resultado, retorna 0
+    }
+
+    public int consultarQuantidadeUsuario() throws SQLException {
+        String sql = "SELECT \n" +
+                "    e.name AS event_name,\n" +
+                "    COUNT(p.id) AS total_users\n" +
+                "FROM \n" +
+                "    public.evento e\n" +
+                "JOIN \n" +
+                "    public.participants p ON e.id = p.event_id\n" +
+                "GROUP BY \n" +
+                "    e.id, e.name\n" +
+                "ORDER BY \n" +
+                "    total_users DESC;";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("total_users");
+                }
+            }
+        }
+        return 0;
+    }
     public void atualizarEvento(Evento evento) throws SQLException {
         String sql = "UPDATE Evento SET name = ?, description = ?, starts_in = ?, end_in = ?, " +
                 "payed_event = ?, value_event = ?, company_id = ? WHERE id = ?;";
