@@ -9,12 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import br.com.treinaweb.springbootapi.pessoas.entity.Pessoa;
 import br.com.treinaweb.springbootapi.pessoas.service.PessoaService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -48,10 +45,16 @@ public class PessoaController {
     }
 
     @PostMapping
-    public ResponseEntity<Pessoa> criarPessoa(@RequestBody Pessoa pessoa) throws ExcecoesPersonalizadas.CriarPessoaExcessao,SQLException {
-
+    public ResponseEntity<String> criarPessoa(@RequestBody Pessoa pessoa) throws ExcecoesPersonalizadas.CriarPessoaExcessao,SQLException {
         pessoa = pessoaService.criarPessoa(pessoa);
-        return ResponseEntity.status(HttpStatus.CREATED).body(pessoa);
+        String pessoaExiste = "Usuario criado";
+        return ResponseEntity.status(HttpStatus.CREATED).body(pessoaExiste);
+    }
+
+    @PostMapping("/{login}")
+    public ResponseEntity<Boolean> checarLogin(@RequestBody Pessoa pessoa) throws SQLException{
+        boolean existeUsuario = pessoaService.checarLogin(pessoa);
+        return ResponseEntity.status(HttpStatus.OK).body(existeUsuario);
     }
 
     @PutMapping("/{id}")

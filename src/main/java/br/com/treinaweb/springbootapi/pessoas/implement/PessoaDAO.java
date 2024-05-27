@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 import br.com.treinaweb.springbootapi.pessoas.atribuicoes.PessoasDefinicoes;
 import br.com.treinaweb.springbootapi.general.sqlUtil.SqlUtil;
@@ -26,50 +28,48 @@ public class PessoaDAO {
         String sql = "SELECT * FROM Usuario";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                ResultSet resultSet = preparedStatement.executeQuery()) {
+             ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 Pessoa pessoa = pessoaMapper.mapResultSetToPessoa(resultSet);
                 pessoas.add(pessoa);
             }
         }
-
         return pessoas;
     }
 
- /*   public void criarUsuarioNormal(Pessoa pessoa) throws SQLException {
-        String sql = "INSERT INTO Usuario ( name,  phone, email, is_adm, password) VALUES ( ?, ?, ?, ?, ?);";
+    public Pessoa criarUsuarioNormal(Pessoa pessoa) throws SQLException {
+        String sqlInsert = "INSERT INTO Usuario (name, phone, email, is_adm, password) VALUES (?, ?, ?, ?, ?);";
 
-        // Montar a string da query preenchida
-        String queryPreenchida = sql.replaceFirst("\\?", "'" + pessoa.getName() + "'")
-                .replaceFirst("\\?", "'" + pessoa.getPhone() + "'")
-                .replaceFirst("\\?", "'" + pessoa.getEmail() + "'")
-                .replaceFirst("\\?", pessoa.getAdm() ? "t" : "f")
-                .replaceFirst("\\?", "'" + pessoa.getPassword() + "'");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert)) {
+            preparedStatement.setString(1, pessoa.getName());
+            preparedStatement.setString(2, pessoa.getPhone());
+            preparedStatement.setString(3, pessoa.getEmail());
+            preparedStatement.setBoolean(4, pessoa.getAdm());
+            preparedStatement.setString(5, pessoa.getPassword());
 
-        System.out.println("Query SQL preenchida: " + queryPreenchida);
-        SqlUtil.executeInsert(sql, connection, pessoa);
-    }*/
- public void criarUsuarioNormal(Pessoa pessoa) {
-     String sql = "INSERT INTO Usuario (name, phone, email, is_adm, password) VALUES (?, ?, ?, ?, ?);";
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erro ao executar a inserção no banco de dados:");
+            e.printStackTrace();
+        }
 
-     try {
-         // Montar a string da query preenchida
-         String queryPreenchida = sql.replaceFirst("\\?", "'" + pessoa.getName() + "'")
-                 .replaceFirst("\\?", "'" + pessoa.getPhone() + "'")
-                 .replaceFirst("\\?", "'" + pessoa.getEmail() + "'")
-                 .replaceFirst("\\?", pessoa.getAdm() ? "true" : "false")
-                 .replaceFirst("\\?", "'" + pessoa.getPassword() + "'");
+        return pessoa;
+    }
 
-         System.out.println("Query SQL preenchida: " + queryPreenchida);
 
-         SqlUtil.executeInsert(sql, connection, pessoa);
-     } catch (SQLException e) {
-         // Em caso de erro ao executar a inserção, imprimir uma mensagem de erro e o stack trace
-         System.err.println("Erro ao executar a inserção no banco de dados:");
-         e.printStackTrace();
-     }
- }
+    public boolean checarLogin(Pessoa pessoa) throws SQLException {
+        String sql = "SELECT * FROM Usuario WHERE email = ? AND password = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, pessoa.getEmail());
+            preparedStatement.setString(2, pessoa.getPassword());
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
+        }
+    }
 
     public void criarUsuarioCompany(Pessoa pessoa) throws SQLException {
         String sql = "INSERT INTO Usuario ( name,  phone, email, is_adm, password, company_name) VALUES ( ?, ?, ?, false, ?,?);";
@@ -95,7 +95,6 @@ public class PessoaDAO {
 
     public void atualizarPessoaNormal(Pessoa pessoa) throws SQLException {
         String sql = "UPDATE Usuario SET name = ?, phone = ?, email = ?, is_adm = false, password = ? WHERE id = ?";
-
         SqlUtil.executeInsert(sql, connection, pessoa);
     }
 

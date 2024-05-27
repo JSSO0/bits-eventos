@@ -23,6 +23,10 @@ public class PessoaService {
         return pessoaDAO.listarTodosOsUsuarios();
     }
 
+    public boolean checarLogin(Pessoa pessoa) throws SQLException{
+        return pessoaDAO.checarLogin(pessoa);
+    }
+
     public Pessoa obterPessoaPorId(String id) throws SQLException {
         return pessoaDAO.consultarPessoaPorId(id);
 
