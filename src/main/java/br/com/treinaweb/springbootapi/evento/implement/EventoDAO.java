@@ -4,10 +4,7 @@ import br.com.treinaweb.springbootapi.evento.atribuicoes.EventoDefinicoes;
 import br.com.treinaweb.springbootapi.general.sqlUtil.SqlUtil;
 import br.com.treinaweb.springbootapi.evento.entity.Evento;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -38,9 +35,33 @@ public class EventoDAO {
     }
 
     public void criarEvento(Evento evento) throws SQLException {
-        String sql = "INSERT INTO Evento ( name, description, created_at, starts_in, end_in, payed_event, value_event, company_id) VALUES ( ?, ?, ?, ?, ?, ?, ?);";
-        SqlUtil.executeInsert(sql, connection, evento);
+        String sql = "INSERT INTO Evento ( name, description, created_at, starts_in, end_in, payed_event, value_event, company_id) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?);";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, evento.getName());
+            pstmt.setString(2, evento.getDescription());
+            pstmt.setTimestamp(3, Timestamp.valueOf(evento.getCreated_at()));
+            pstmt.setTimestamp(4, Timestamp.valueOf(evento.getStarts_in()));
+            pstmt.setTimestamp(5, Timestamp.valueOf(evento.getEnd_in()));
+            pstmt.setBoolean(6, evento.getPayed_event());
+            if (evento.getValue_event() != null) {
+                pstmt.setString(7, evento.getValue_event());
+            } else {
+                pstmt.setNull(7, Types.NUMERIC);
+            }
+            pstmt.setObject(8, UUID.fromString(evento.getCompany_id()));
+
+            System.out.println("Query SQL preenchida: " + pstmt.toString());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            // Em caso de erro ao executar a inserção, imprimir uma mensagem de erro e o stack trace
+            System.err.println("Erro ao executar a inserção no banco de dados:");
+            e.printStackTrace();
+        }
     }
+
+
 
 
     public Evento consultarEvento(String id) throws SQLException {
