@@ -23,7 +23,19 @@ public class CompanyDAO {
 
     public void criarEmpresa(Company empresa) throws SQLException {
         String sql = "INSERT INTO Company (name, description) VALUES (?, ?);";
-        SqlUtil.executeInsert(sql, connection, empresa);
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, empresa.getName());
+            pstmt.setString(2, empresa.getDescription());
+
+            System.out.println("Query SQL preenchida: " + pstmt.toString());
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            // Em caso de erro ao executar a inserção, imprimir uma mensagem de erro e o stack trace
+            System.err.println("Erro ao executar a inserção no banco de dados:");
+            e.printStackTrace();
+        }
     }
 
     public List<Company> listarTodasAsCompanys() throws SQLException{
