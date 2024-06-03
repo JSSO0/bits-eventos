@@ -23,7 +23,7 @@ public class EventoDefinicoes {
         return evento;
     }
 
-    public void copiarAtributos(@NotNull Evento destino, @NotNull Evento origem) {
+    public static void copiarAtributos(@NotNull Evento destino, @NotNull Evento origem) {
         destino.setName(origem.getName());
         destino.setDescription(origem.getDescription());
         destino.setCreated_at(origem.getCreated_at());

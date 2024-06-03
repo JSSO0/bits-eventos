@@ -1,11 +1,13 @@
 package br.com.treinaweb.springbootapi.atribuicoes;
 
+import br.com.treinaweb.springbootapi.evento.atribuicoes.EventoDefinicoes;
 import br.com.treinaweb.springbootapi.evento.entity.Evento;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -24,6 +26,7 @@ public class EventoDefinicoesTest {
     @Test
     public void testMapResultSetToEvento() throws SQLException {
         // Configuração dos dados simulados do ResultSet
+        when(resultSet.getString("id")).thenReturn(UUID.randomUUID().toString());
         when(resultSet.getString("starts_in")).thenReturn("2024-06-01");
         when(resultSet.getString("name")).thenReturn("Event Name");
         when(resultSet.getBoolean("payed_event")).thenReturn(true);
@@ -34,6 +37,7 @@ public class EventoDefinicoesTest {
         Evento evento = eventoDefinicoes.mapResultSetToEvento(resultSet);
 
         // Verifica se os atributos foram mapeados corretamente
+        assertNotNull(evento.getId());
         assertEquals("2024-06-01", evento.getStarts_in());
         assertEquals("Event Name", evento.getName());
         assertTrue(evento.getPayed_event());
@@ -41,6 +45,9 @@ public class EventoDefinicoesTest {
         assertEquals("company123", evento.getCompany_id());
     }
 
+    /**
+     * 
+     */
     @Test
     public void testCopiarAtributos() {
         // Cria objetos Evento para origem e destino
@@ -54,7 +61,7 @@ public class EventoDefinicoesTest {
         Evento destino = new Evento();
 
         // Chama o método que será testado
-        eventoDefinicoes.copiarAtributos(destino, origem);
+        EventoDefinicoes.copiarAtributos(destino, origem);
 
         // Verifica se os atributos foram copiados corretamente
         assertEquals(origem.getStarts_in(), destino.getStarts_in());
