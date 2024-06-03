@@ -1,5 +1,6 @@
 package br.com.treinaweb.springbootapi.evento.entity;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.UUID;
 

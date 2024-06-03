@@ -7,7 +7,6 @@ import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +30,13 @@ public List<Evento> listarMeusEventos(UUID userId) throws  SQLException{
         return eventoDAO.consultarEvento(id);
     }
 
+    public int consultarQuantidadeUsuariosPorNome(String name) throws SQLException{
+        return  eventoDAO.consultarQuantidadeUsuariosPorNome(name);
+    }
+
+    public int consultarQuantidadeUsuarios() throws SQLException{
+        return  eventoDAO.consultarQuantidadeUsuario();
+    }
     public Evento criarEvento(Evento evento) throws SQLException{
         eventoDAO.criarEvento(evento);
         return evento;
