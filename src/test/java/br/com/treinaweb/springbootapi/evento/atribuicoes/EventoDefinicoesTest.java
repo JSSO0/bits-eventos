@@ -1,4 +1,4 @@
-package br.com.treinaweb.springbootapi.evento.atribuicoes;
+package br.com.treinaweb.springbootapi.atribuicoes;
 
 import br.com.treinaweb.springbootapi.evento.entity.Evento;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,55 +8,59 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
-class EventoDefinicoesTest {
+public class EventoDefinicoesTest {
 
     private EventoDefinicoes eventoDefinicoes;
+    private ResultSet resultSet;
 
     @BeforeEach
     public void setUp() {
         eventoDefinicoes = new EventoDefinicoes();
+        resultSet = mock(ResultSet.class);
     }
 
     @Test
     public void testMapResultSetToEvento() throws SQLException {
-        ResultSet resultSetMock = mock(ResultSet.class);
+        // Configuração dos dados simulados do ResultSet
+        when(resultSet.getString("starts_in")).thenReturn("2024-06-01");
+        when(resultSet.getString("name")).thenReturn("Event Name");
+        when(resultSet.getBoolean("payed_event")).thenReturn(true);
+        when(resultSet.getString("value_event")).thenReturn("100.0");
+        when(resultSet.getString("company_id")).thenReturn("company123");
 
-        when(resultSetMock.getString("data_evento")).thenReturn("2024-06-01");
-        when(resultSetMock.getString("name_evento")).thenReturn("Festival de Música");
-        when(resultSetMock.getBoolean("evento_pago")).thenReturn(true);
-        when(resultSetMock.getFloat("evento_valor")).thenReturn(150.0f);
-        when(resultSetMock.getString("adm_id")).thenReturn("adm123");
+        // Chama o método que será testado
+        Evento evento = eventoDefinicoes.mapResultSetToEvento(resultSet);
 
-        Evento evento = eventoDefinicoes.mapResultSetToEvento(resultSetMock);
-
+        // Verifica se os atributos foram mapeados corretamente
         assertEquals("2024-06-01", evento.getStarts_in());
-        assertEquals("Festival de Música", evento.getName());
+        assertEquals("Event Name", evento.getName());
         assertTrue(evento.getPayed_event());
-        assertEquals(150.0f, evento.getValue_event());
-        assertEquals("adm123", evento.getCompany_id());
+        assertEquals("100.0", evento.getValue_event());
+        assertEquals("company123", evento.getCompany_id());
     }
 
     @Test
     public void testCopiarAtributos() {
+        // Cria objetos Evento para origem e destino
         Evento origem = new Evento();
-        origem.getStarts_in("2024-06-01");
-        origem.getName("Festival de Música");
-        origem.getPayed_event(true);
-        origem.getValue_event(150.0f);
-        origem.getCompany_id("adm123");
+        origem.setStarts_in("2024-06-01");
+        origem.setName("Event Name");
+        origem.setPayed_event(true);
+        origem.setValue_event("100.0");
+        origem.setCompany_id("company123");
 
         Evento destino = new Evento();
 
+        // Chama o método que será testado
         eventoDefinicoes.copiarAtributos(destino, origem);
 
+        // Verifica se os atributos foram copiados corretamente
         assertEquals(origem.getStarts_in(), destino.getStarts_in());
         assertEquals(origem.getName(), destino.getName());
-        assertEquals(origem.getPayed_event(), destino.getPayed_event());
+        assertTrue(destino.getPayed_event());
         assertEquals(origem.getValue_event(), destino.getValue_event());
         assertEquals(origem.getCompany_id(), destino.getCompany_id());
     }
-
 }
