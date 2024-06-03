@@ -1,9 +1,10 @@
 package br.com.treinaweb.springbootapi.evento.entity;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Evento {
-    private String id;
+    private UUID id;
     private String name;
     private String description;
     private String created_at;
@@ -13,11 +14,21 @@ public class Evento {
     private String value_event;
     private String company_id;
 
-    public String getId() {
+    public Integer getParticipantCount() {
+        return participantCount;
+    }
+
+    public void setParticipantCount(Integer participantCount) {
+        this.participantCount = participantCount;
+    }
+
+    private Integer participantCount;
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -96,4 +107,6 @@ public class Evento {
     public int hashCode() {
         return Objects.hash(getId(), getName(), getDescription(), getCreated_at(), getStarts_in(), getEnd_in(), getPayed_event(), getValue_event(), getCompany_id());
     }
+
+
 }

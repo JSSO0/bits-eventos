@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/eventos")
@@ -30,6 +31,11 @@ public class EventoController {
     @GetMapping
     public ResponseEntity<List<Evento>> listarEvento() throws ExcecoesPersonalizadas.ListarExcessao, SQLException {
         List<Evento> eventos = eventoService.listarTodosEventos();
+        return ResponseEntity.ok(eventos);
+    }
+    @GetMapping("/meus-eventos/{userId}")
+    public ResponseEntity<List<Evento>> listarMeusEventos(@PathVariable UUID userId) throws ExcecoesPersonalizadas.ListarExcessao, SQLException {
+        List<Evento> eventos = eventoService.listarMeusEventos(userId);
         return ResponseEntity.ok(eventos);
     }
 

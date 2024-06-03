@@ -22,15 +22,57 @@ public class EventoDAO {
         this.eventoMapper = new EventoDefinicoes();
     }
 
+    public int getParticipantCount(UUID eventId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM participants WHERE event_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setObject(1, eventId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        }
+        return 0;
+    }
+
+    public List<Evento> getEventosInscritos(UUID userId) throws SQLException {
+        List<Evento> eventos = new ArrayList<>();
+        String sql = "SELECT e.* FROM evento e INNER JOIN participants p ON e.id = p.event_id WHERE p.user_id = ?";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setObject(1, userId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Evento evento = new Evento();
+                    evento.setId(UUID.fromString(resultSet.getString("id")));
+                    evento.setName(resultSet.getString("name"));
+                    evento.setDescription(resultSet.getString("description"));
+                    evento.setCreated_at(resultSet.getString("created_at"));
+                    evento.setStarts_in(resultSet.getString("Starts_in"));
+                    evento.setEnd_in(resultSet.getString("end_in"));
+                    evento.setPayed_event(Boolean.valueOf(resultSet.getString("payed_event")));
+                    evento.setValue_event(resultSet.getString("value_event"));
+                    evento.setCompany_id(resultSet.getString("company_id"));
+                    int participantCount = getParticipantCount(evento.getId());
+                    evento.setParticipantCount(participantCount);
+                    eventos.add(evento);
+                }
+            }
+        }
+        return eventos;
+    }
+
+
     public List<Evento> listarTodosEventos() throws SQLException {
         List<Evento> eventos = new ArrayList<>();
         String sql = "SELECT * from evento";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
-
             while (resultSet.next()) {
                 Evento evento = eventoMapper.mapResultSetToEvento(resultSet);
+                int participantCount = getParticipantCount(evento.getId());
+                evento.setParticipantCount(participantCount);
                 eventos.add(evento);
             }
         }

@@ -1,10 +1,6 @@
 package br.com.treinaweb.springbootapi.pessoas.entity;
 
 
-import java.util.Objects;
-import java.util.UUID;
-
-
 public class Pessoa {
     private String id;
     private String name;
@@ -14,7 +10,14 @@ public class Pessoa {
     private Boolean isAdm;
     private String password;
     private String created_at;
+    private  String token;
 
+    public void setToken(String token) {
+        this.token = token;
+    }
+    public String getToken(){
+        return token;
+    }
     public String getId() {
         return id;
     }
@@ -78,4 +81,6 @@ public class Pessoa {
     public void setCreated_at(String created_at) {
         this.created_at = created_at;
     }
+
+
 }

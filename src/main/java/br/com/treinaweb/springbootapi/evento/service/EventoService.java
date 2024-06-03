@@ -3,12 +3,14 @@ package br.com.treinaweb.springbootapi.evento.service;
 import br.com.treinaweb.springbootapi.evento.atribuicoes.EventoDefinicoes;
 import br.com.treinaweb.springbootapi.evento.entity.Evento;
 import br.com.treinaweb.springbootapi.evento.implement.EventoDAO;
+import jdk.jfr.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class EventoService {
@@ -22,7 +24,9 @@ public class EventoService {
     public List<Evento> listarTodosEventos() throws SQLException{
         return  eventoDAO.listarTodosEventos();
     }
-
+public List<Evento> listarMeusEventos(UUID userId) throws  SQLException{
+        return  eventoDAO.getEventosInscritos(userId);
+}
     public Evento listarEventoEspecifico(String id) throws SQLException{
         return eventoDAO.consultarEvento(id);
     }

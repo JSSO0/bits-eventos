@@ -8,10 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.util.UUID;
 
 import br.com.treinaweb.springbootapi.pessoas.atribuicoes.PessoasDefinicoes;
 import br.com.treinaweb.springbootapi.general.sqlUtil.SqlUtil;
 import br.com.treinaweb.springbootapi.pessoas.entity.Pessoa;
+import org.jetbrains.annotations.NotNull;
 
 
 public class PessoaDAO {
@@ -58,7 +60,7 @@ public class PessoaDAO {
     }
 
 
-    public boolean checarLogin(Pessoa pessoa) throws SQLException {
+    public Pessoa checarLogin(Pessoa pessoa) throws SQLException {
         String sql = "SELECT * FROM Usuario WHERE email = ? AND password = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -66,9 +68,20 @@ public class PessoaDAO {
             preparedStatement.setString(2, pessoa.getPassword());
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                return resultSet.next();
+                if (resultSet.next()) {
+                    Pessoa pessoaLogada = new Pessoa();
+                    String token = UUID.randomUUID().toString();
+                    pessoaLogada.setToken(token);
+                    pessoaLogada.setId(resultSet.getString("id"));
+                    pessoaLogada.setName(resultSet.getString("name"));
+
+
+
+                    return pessoaLogada;
+                }
             }
         }
+        return null;
     }
 
     public void criarUsuarioCompany(Pessoa pessoa) throws SQLException {
@@ -78,12 +91,13 @@ public class PessoaDAO {
 
 
     public Pessoa consultarPessoaPorId(String id) throws SQLException {
-        String sql = "SELECT * FROM Usuario WHERE id = ?";
+        String sql = "SELECT * FROM Usuario WHERE id = CAST(? AS UUID)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, id);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
+
                     PessoasDefinicoes pessoaMapper = new PessoasDefinicoes();
                     return pessoaMapper.mapResultSetToPessoa(resultSet);
                 } else {
@@ -94,8 +108,21 @@ public class PessoaDAO {
     }
 
     public void atualizarPessoaNormal(Pessoa pessoa) throws SQLException {
-        String sql = "UPDATE Usuario SET name = ?, phone = ?, email = ?, is_adm = false, password = ? WHERE id = ?";
-        SqlUtil.executeInsert(sql, connection, pessoa);
+        String sql = "UPDATE Usuario SET name = ?, phone = ?, email = ?, is_adm = false, password = ? WHERE id = CAST(? AS UUID)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, pessoa.getName());
+            preparedStatement.setString(2, pessoa.getPhone());
+            preparedStatement.setString(3, pessoa.getEmail());
+            preparedStatement.setString(4, pessoa.getPassword());
+            preparedStatement.setString(5, pessoa.getId());
+
+            int affectedRows = preparedStatement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Atualização falhou, nenhum linha afetada.");
+            }
+        }
     }
 
     public void atualizarPessoaCompany(Pessoa pessoa) throws SQLException {

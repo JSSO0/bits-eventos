@@ -5,12 +5,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class EventoDefinicoes {
 
     public Evento mapResultSetToEvento(@NotNull ResultSet resultSet) throws SQLException {
         Evento evento = new Evento();
-        evento.setId(resultSet.getString("id"));
+        evento.setId(UUID.fromString(resultSet.getString("id")));
         evento.setName(resultSet.getString("name"));
         evento.setDescription(resultSet.getString("description"));
         evento.setCreated_at(resultSet.getString("created_at"));

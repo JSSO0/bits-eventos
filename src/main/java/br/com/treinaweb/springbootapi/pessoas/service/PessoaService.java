@@ -10,6 +10,7 @@ import br.com.treinaweb.springbootapi.pessoas.entity.Pessoa;
 import br.com.treinaweb.springbootapi.pessoas.implement.PessoaDAO;
 
 import java.sql.SQLException;
+
 @Service
 public class PessoaService {
     final PessoaDAO pessoaDAO;
@@ -23,8 +24,8 @@ public class PessoaService {
         return pessoaDAO.listarTodosOsUsuarios();
     }
 
-    public boolean checarLogin(Pessoa pessoa) throws SQLException{
-        return pessoaDAO.checarLogin(pessoa);
+    public Pessoa checarLogin(Pessoa pessoa) throws SQLException {
+         return pessoaDAO.checarLogin(pessoa);
     }
 
     public Pessoa obterPessoaPorId(String id) throws SQLException {
@@ -41,8 +42,8 @@ public class PessoaService {
         Pessoa pessoaExistente = pessoaDAO.consultarPessoaPorId(id);
         if (pessoaExistente != null) {
             PessoasDefinicoes pessoaMapper = new PessoasDefinicoes();
-            pessoaDAO.atualizarPessoaNormal(new Pessoa());
             pessoaMapper.copiarAtributos(pessoaExistente, newPessoa);
+            pessoaDAO.atualizarPessoaNormal(pessoaExistente);
             return pessoaExistente;
         } else {
             return null;
