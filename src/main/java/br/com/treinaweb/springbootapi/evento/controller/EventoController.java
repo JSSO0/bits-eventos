@@ -1,8 +1,10 @@
 package br.com.treinaweb.springbootapi.evento.controller;
 
 import br.com.treinaweb.springbootapi.evento.entity.Evento;
+import br.com.treinaweb.springbootapi.evento.implement.EventoDAO;
 import br.com.treinaweb.springbootapi.evento.service.EventoService;
 import br.com.treinaweb.springbootapi.general.exceptionhandler.ExcecoesPersonalizadas;
+import br.com.treinaweb.springbootapi.pessoas.entity.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +38,11 @@ public class EventoController {
     public ResponseEntity<List<Evento>> listarMeusEventos(@PathVariable UUID userId) throws ExcecoesPersonalizadas.ListarExcessao, SQLException {
         List<Evento> eventos = eventoService.listarMeusEventos(userId);
         return ResponseEntity.ok(eventos);
+    }
+    @GetMapping("/eventos-participantes/{id}")
+    public ResponseEntity<List<EventoDAO.PessoaDTO>> listarParticipantes(@PathVariable UUID id) throws SQLException{
+        List<EventoDAO.PessoaDTO> pessoas= eventoService.listarParticipantesporEvento(id);
+        return ResponseEntity.ok(pessoas);
     }
 
     @GetMapping("/{id}")

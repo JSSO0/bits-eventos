@@ -3,6 +3,7 @@ package br.com.treinaweb.springbootapi.evento.implement;
 import br.com.treinaweb.springbootapi.evento.atribuicoes.EventoDefinicoes;
 import br.com.treinaweb.springbootapi.general.sqlUtil.SqlUtil;
 import br.com.treinaweb.springbootapi.evento.entity.Evento;
+import br.com.treinaweb.springbootapi.pessoas.entity.Pessoa;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,7 +14,29 @@ public class EventoDAO {
     private final Connection connection;
     private final EventoDefinicoes eventoMapper;
 
+    public static class PessoaDTO {
+        public String getId() {
+            return id;
+        }
 
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        private String id;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        private String name;
+
+
+    }
     public EventoDAO(Connection connection) throws SQLException {
         this.connection = connection;
         this.eventoMapper = new EventoDefinicoes();
@@ -59,7 +82,26 @@ public class EventoDAO {
         return eventos;
     }
 
+    public List<PessoaDTO> listarOsUsuariosdoEvento(UUID id) throws SQLException {
+        List<PessoaDTO> pessoas = new ArrayList<>();
+        String sql = "SELECT u.id AS user_id, u.name\n" +
+                "FROM public.participants AS p\n" +
+                "JOIN public.usuario AS u ON p.user_id = u.id\n" +
+                "WHERE p.event_id = ?;";
 
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setObject(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                PessoaDTO pessoa = new PessoaDTO();
+                pessoa.setId(String.valueOf((UUID) resultSet.getObject("user_id")));
+                pessoa.setName(resultSet.getString("name"));
+                pessoas.add(pessoa);
+            }
+        }
+        return pessoas;
+    }
     public List<Evento> listarTodosEventos() throws SQLException {
         List<Evento> eventos = new ArrayList<>();
         String sql = "SELECT * from evento";
@@ -137,6 +179,7 @@ public class EventoDAO {
         }
         return 0;  // Se não houver resultado, retorna 0
     }
+
 
     public int consultarQuantidadeUsuario() throws SQLException {
         String sql = "SELECT \n" +

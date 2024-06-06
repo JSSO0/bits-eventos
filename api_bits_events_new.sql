@@ -187,6 +187,21 @@ ALTER TABLE ONLY public.usuario
     ADD CONSTRAINT usuario_company_id_fkey FOREIGN KEY (company_id) REFERENCES public.company(id);
 
 
+-- Adiciona a extensão uuid-ossp
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Adiciona uma nova coluna com um UUID gerado automaticamente como valor padrão
+ALTER TABLE participants ADD COLUMN new_id uuid DEFAULT uuid_generate_v4();
+
+-- Copia os dados da coluna id antiga para a nova coluna
+UPDATE participants SET new_id = id;
+
+-- Remove a coluna id antiga
+ALTER TABLE participants DROP COLUMN id;
+
+-- Renomeia a nova coluna para id
+ALTER TABLE participants RENAME COLUMN new_id TO id;
+
 -- Completed on 2024-05-12 19:54:41
 
 --
